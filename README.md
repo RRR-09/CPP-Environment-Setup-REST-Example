@@ -1,6 +1,8 @@
 ## About
 This shows how to setup VSCode for C++ development on Windows 10 and M1 Macbooks, using `LLVM`/`clang` for compiling, `clangd` for language server and intellisense, `vcpkg` for package/library management, and `CMake`/`Ninja` for general project management and buildfile generation.
 
+It includes a basic example of REST API interaction and JSON processing using libraries I believe to be good for simplicity and non-advanced usage.
+
 As an infrequent C++ developer, this is a rough guide that probably could be improved or revised.
 
 ## VSCode (Basically) Required Extensions
