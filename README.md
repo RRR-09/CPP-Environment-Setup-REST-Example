@@ -186,4 +186,100 @@ General settings, not needed, add as you wish and experiment. Mouse over a setti
     "**/.cache/**": true, // C++
     "**/build/**": true // C++
   },
-  
+```
+
+## Setup on Mac
+## Setup on Mac
+TODO:
+- Uses `brew`, `brew install llvm`, github's `vcpkg`, custom kit.json, and settings json below
+```jsonc
+{
+  // Disable formatting and intellisense engine in Microsoft C/C++ extension (provides debugging)
+  // This way you can have the other features of the extension but use clangd for LSP
+  "C_Cpp.formatting": "Disabled",
+  "C_Cpp.intelliSenseEngine": "Disabled",
+
+  //Configure .clangd arguments
+  "clangd.checkUpdates": false, // Disable 'New clangd is available, download?' prompt, downloads to a totally different folder
+  "clangd.onConfigChanged": "restart",
+  "clangd.path": "/opt/homebrew/opt/llvm/bin/clangd",
+  "clangd.arguments": [
+    "-background-index", // Index project code in the background and persist index on disk.
+    "-header-insertion=iwyu", // Add #include directives when accepting code completions.  Options: "iwyu" (Include what you use), "never"
+    "-header-insertion-decorators", // Prepend a circular dot or space before the completion label, depending on whether an include line will be inserted or not
+    "--function-arg-placeholders" //When disabled, completions contain only parentheses for function calls. When enabled, completions also contain placeholders for method parameters
+  ],
+  "explorer.confirmDelete": false,
+  //Configure cmake arguments
+  "cmake.buildDirectory": "${workspaceFolder}/build/${buildKit}/${buildType}/",
+  "cmake.configureArgs": [
+    "-Wno-dev" // Suppress warnings about CMake files you didnt make
+  ],
+  "cmake.configureOnOpen": true, // Personal choice, runs the `cmake configure` command on vscode start
+  "cmake.configureSettings": {
+    "CMAKE_EXPORT_COMPILE_COMMANDS": 1,
+    "CMAKE_TOOLCHAIN_FILE": "/Users/robedev/vcpkg/scripts/buildsystems/vcpkg.cmake"
+    //"CMAKE_MAKE_PROGRAM": "${env:CPP_GENERATOR_PATH}"
+  },
+  "cmake.copyCompileCommands": "${workspaceFolder}/compile_commands.json",
+  "cmake.environment": {
+    "VERBOSE": "0" // Set VERBOSE to 1 if you want more information from builds.
+  },
+  "cmake.generator": "Ninja",
+  "cmake.sourceDirectory": "${workspaceFolder}/",
+  "[cpp]": {
+    "editor.inlayHints.enabled": "off" // Can get annoying for cpp specficially
+  },
+  "cmake.debugConfig": {
+    "externalConsole": true
+  },
+  // Theme/Visual
+  "workbench.colorTheme": "Default Dark+",
+  "workbench.colorCustomizations": {
+    "editorGutter.background": "#383838"
+  },
+  "editor.showFoldingControls": "always",
+  "editor.renderFinalNewline": false,
+  "editor.rulers": [
+    {
+      "column": 100,
+      "color": "#5ab1ab21"
+    },
+    {
+      "column": 120,
+      "color": "#ff000046"
+    }
+  ],
+  "window.title": "${dirty}${rootName}",
+
+  // Git
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "git.ignoreRebaseWarning": true,
+
+  // Misc
+  "explorer.confirmDragAndDrop": false,
+  "workbench.startupEditor": "none",
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/.cache/**": true, // C++
+    "**/build/**": true // C++
+  },
+  "search.exclude": {
+    "**/.git/**": true,
+    "**/.cache/**": true, // C++
+    "**/build/**": true // C++
+  },
+  "[json]": {
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.formatOnSave": true
+}
+```
